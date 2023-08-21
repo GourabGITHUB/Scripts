@@ -1,8 +1,22 @@
-$chkSrvcs = get-service wuauserv, vaultsvc, upnphost, ssdpsrv, policyagent, ikeext, fontcache, fdrespub, fdphost
-if ($chkSrvcs.Status -eq "Running"){
-echo "stopping services:"; stop-service -f fdphost, fdrespub, fontcache, ikeext, policyagent, ssdpsrv, upnphost, vaultsvc;
-get-service fdphost, fdrespub, fontcache, ikeext, policyagent, ssdpsrv, upnphost, vaultsvc
+#creating variable to store names of the services 
+
+ $Srvcs = "vaultsvc", "upnphost", "ssdpsrv","policyagent","ikeext","fontcache", "fdrespub", "fdphost","vss","wuauserv"
+
+#looping through each service
+
+foreach ($Srvc in $Srvcs){
+
+#creating second variable to call the get-service command
+
+$SrvcStatus = get-service $Srvc
+
+#If else statement to check and stop running services 
+
+	if($SrvcStatus.Status -eq "Running"){
+ echo stoping $Srvc
+ Stop-Service -f $Srvc
 }
-else {
-echo "services are not running"
+	else {
+ echo $Srvc is not running
+}
 }
