@@ -17,7 +17,7 @@ echo "Calculating usage of '$CHROME_MAIN_CACHE_DIR'..."
 if [ -d "$CHROME_MAIN_CACHE_DIR" ]; then
     TOTAL_USAGE_BYTES=$(du -sb "$CHROME_MAIN_CACHE_DIR" 2>/dev/null | awk '{print $1}')
     if (( TOTAL_USAGE_BYTES > 0 )); then
-        echo "Estimated usage of main web cache: $(numfmt --to=iec-bytes $TOTAL_USAGE_BYTES)"
+        echo "Estimated usage of main web cache: $(echo "$TOTAL_USAGE_BYTES" | numfmt --to=iec)"
     else
         echo "Main web cache directory exists but appears empty."
         echo "No data to clear. Exiting."
